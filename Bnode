@@ -1,0 +1,51 @@
+二叉排序树，也称为二叉查找树。可以是一颗空树，也可以是一颗具有如下特性的非空二叉树： 
+1. 若左子树非空，则左子树上所有节点关键字值均不大于根节点的关键字值； 
+2. 若右子树非空，则右子树上所有节点关键字值均不小于根节点的关键字值； 
+3. 左、右子树本身也是一颗二叉排序树。 现在给你N个关键字值各不相同的节点，要求你按顺序插入一个初始为空树的二叉排序树中，每次插入后成功后，
+求相应的父亲节点的关键字值，如果没有父亲节点，则输出-1。
+
+解答：
+
+#include<stdio.h>
+#include<stdlib.h>
+
+typedef struct Bnode{
+    int data;
+    struct Bnode* lchild;
+    struct Bnode* rchild;
+}Bnode;
+int f=-1;
+
+
+Bnode* insert_data(Bnode *T,int d){
+    if(T==NULL){
+        T=(Bnode*)malloc(sizeof(Bnode));
+        T->data=d;
+        T->lchild=NULL;
+        T->rchild=NULL;
+    }
+    else if(d>T->data){
+        f=T->data;
+        T->rchild=insert_data(T->rchild,d);
+    }
+    else{
+        f=T->data;
+        T->lchild=insert_data(T->lchild,d);
+    }
+    return T;
+}
+
+int main(){
+    int n;
+    while(scanf("%d",&n)!=EOF){
+        int i,d;
+        struct Bnode *T=NULL;
+        for(i=0;i<n;i++){
+            scanf("%d",&d);
+            T=insert_data(T,d);
+            printf("%d\n",f);
+        }
+    }
+    return 0;
+}
+
